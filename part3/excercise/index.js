@@ -40,9 +40,16 @@ app.get("/info", (request, response) => {
 
 app.get("/api/persons/:id", (request, response) => {
   const id = request.params.id;
-  const person = persons.filter((person) => person.id === id);
+  const person = persons.find((person) => person.id === id);
 
   response.json(person);
+});
+
+app.delete("/api/persons/:id", (request, response) => {
+  const id = request.params.id;
+  persons = persons.filter((person) => person.id === id);
+
+  response.status(204).end();
 });
 
 const PORT = 3001;
