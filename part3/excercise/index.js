@@ -1,11 +1,18 @@
 const express = require("express");
 const app = express();
-
 const morgan = require("morgan");
 
 const morganConfig = morgan("tiny");
 
-app.use(morganConfig);
+morgan.token("body", (request, response) => {
+  if (request.body) {
+    return JSON.stringify(request.body);
+  } else {
+    return " ";
+  }
+});
+
+app.use(morgan(":method :url :status :res[content-length] - :response-time ms :body"));
 
 app.use(express.json());
 
